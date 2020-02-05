@@ -15,7 +15,7 @@ let data = [
 ];
 
 app.get("/", (req, res) => {
-  res.send("welcome");
+  res.send("welcome to jumplings API");
 });
 
 app.get("/jumplings", (req, res) => {
@@ -29,6 +29,21 @@ app.post("/jumplings", (req, res) => {
   person.id = req.body.id;
   data.push(person);
   res.status(201).send([req.body]);
+});
+
+app.get("/jumplings/:id", (req, res) => {
+  const resultArr = data.filter(
+    jumpling => jumpling.id === parseInt(req.params.id)
+  );
+  res.status(200).send(resultArr);
+});
+
+app.put("/jumplings/:id", (req, res) => {
+  const idToFind = person => person.id === parseInt(req.params.id);
+  let indexOfObjectToChange = data.findIndex(idToFind);
+  data[indexOfObjectToChange].name = req.body.name;
+  const resultObject = { id: parseInt(req.params.id), name: req.body.name };
+  res.status(200).send([resultObject]);
 });
 
 module.exports = app;
