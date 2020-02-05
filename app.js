@@ -37,6 +37,17 @@ app.post("/jumplings", (req, res) => {
   res.status(201).send([req.body]);
 });
 
+app.post("/jumplings/presenters", (req, res) => {
+  const index = Math.floor(Math.random() * data.length);
+  let jumpling = data[index];
+  history.push(jumpling);
+  res.status(201).send([jumpling]);
+});
+
+app.get("/jumplings/presenters", (req, res) => {
+  res.status(200).send(history);
+});
+
 app.get("/jumplings/:id", (req, res) => {
   const resultArr = data.filter(
     jumpling => jumpling.id === parseInt(req.params.id)
@@ -58,12 +69,6 @@ app.delete("/jumplings/:id", (req, res) => {
   const tempJumpling = data[indexOfObjectToChange];
   data.splice(indexOfObjectToChange, 1);
   res.status(200).send(tempJumpling);
-});
-
-app.post("/jumplings/presenters", (req, res) => {
-  const index = Math.floor(Math.random() * data.length);
-  const jumpling = data[index];
-  res.status(201).send([jumpling]);
 });
 
 module.exports = app;
