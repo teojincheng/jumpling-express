@@ -51,6 +51,7 @@ describe("app.js", () => {
   it("PUT /jumplings/:id should respond with status 200 and return the jumpling object", async () => {
     const jumpling = { name: "Tommy" };
     const expectedJumpling = { id: 1, name: "Tommy" };
+
     const response = await request(app)
       .put("/jumplings/1")
       .expect(200)
@@ -58,4 +59,17 @@ describe("app.js", () => {
 
     expect(response.body).toStrictEqual([expectedJumpling]);
   });
+
+  /*
+
+  it("DELETE /jumpling/:id should respond with status 200 and return a jumpling object", async () => {
+    const expectedJumpling = { id: 1, name: "Steve" };
+
+    const response = await request(app)
+      .delete("/jumplings/1")
+      .expect(200);
+
+    expect(response.body).toStrictEqual(expectedJumpling);
+  });
+  */
 });
