@@ -21,7 +21,15 @@ router.get("/", (req, res) => {
   res.status(200).send(data);
 });
 
-router.post("/", (req, res) => {
+const requireJsonContent = (req, res, next) => {
+  if (req.headers["content-type"] !== "application/json") {
+    res.status(400).send("Server wants application/json!");
+  } else {
+    next();
+  }
+};
+
+router.post("/", requireJsonContent, (req, res) => {
   const persondata = req.body;
   const person = {};
   person.name = req.body.name;

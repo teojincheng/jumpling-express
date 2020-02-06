@@ -16,9 +16,29 @@ const expectedData = [
   }
 ];
 
+const expectedListOfEndPoints = {
+  "0": "GET    /",
+  "1": "GET    /jumplings",
+  "2": "POST   /jumplings",
+  "3": "GET /jumplings/:id",
+  "4": "PUT /jumplings/:id",
+  "5": "DELETE /jumplings/:id",
+  "6": "-----------------------",
+  "7": "POST   /jumplings/presenters",
+  "8": "GET    /jumplings/presenters"
+};
+
 describe("app.js", () => {
   it("ensure testing with jest work", () => {
     expect(1).toBe(1);
+  });
+
+  it("GET / should respond with status 200 and retrieve all the API endpoints", async () => {
+    const response = await request(app)
+      .get("/")
+      .expect(200);
+
+    expect(response.body).toStrictEqual(expectedListOfEndPoints);
   });
 
   it("GET /jumplings should respond with status 200 and retrive all the jumplings ", async () => {
