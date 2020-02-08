@@ -2,25 +2,9 @@ const express = require("express");
 const router = express.Router();
 //router.use(express.json());
 
-let data = [
-  {
-    id: 1,
-    name: "Steve"
-  },
-  {
-    id: 2,
-    name: "Peter"
-  },
-  {
-    id: 3,
-    name: "Susan"
-  }
-];
+const JumplingController = require("../controllers/jumpling.controller");
 
-router.get("/", (req, res) => {
-  res.status(200).send(data);
-});
-
+router.get("/", JumplingController.getAllJumpling);
 /**
  * function(middleware) for checking JSON type.
  * @param {*} req
