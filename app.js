@@ -22,11 +22,6 @@ app.get("/", (req, res) => {
   res.send(listOfEndPoints);
 });
 
-app.get("/jumplings", (req, res, next) => {
-  console.log("middleware for jumplings was called wooh.");
-  next();
-});
-
 app.use("/jumplings/presenters", presenterRouter);
 app.use("/jumplings", jumplingRouter);
 

@@ -21,6 +21,12 @@ router.get("/", (req, res) => {
   res.status(200).send(data);
 });
 
+/**
+ * function(middleware) for checking JSON type.
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 const requireJsonContent = (req, res, next) => {
   if (req.headers["content-type"] !== "application/json") {
     res.status(400).send("Server wants application/json!");
@@ -38,11 +44,21 @@ router.post("/", requireJsonContent, (req, res) => {
   res.status(201).send([req.body]);
 });
 
-router.get("/:id", (req, res) => {
+/**
+ * parameter processing
+ */
+router.param("id", (req, res, next, jumplingId) => {
   const resultArr = data.filter(
     jumpling => jumpling.id === parseInt(req.params.id)
   );
-  res.status(200).send(resultArr);
+
+  req.resultArr = resultArr;
+  next();
+});
+
+router.get("/:id", (req, res) => {
+  const arrOfJumpling = req.resultArr;
+  res.status(200).send(arrOfJumpling);
 });
 
 router.put("/:id", (req, res) => {
