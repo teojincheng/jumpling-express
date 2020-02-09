@@ -1,10 +1,25 @@
 const express = require("express");
 const router = express.Router();
 //router.use(express.json());
-
 const JumplingController = require("../controllers/jumpling.controller");
 
+let data = [
+  {
+    id: 1,
+    name: "Steve"
+  },
+  {
+    id: 2,
+    name: "Peter"
+  },
+  {
+    id: 3,
+    name: "Susan"
+  }
+];
+
 router.get("/", JumplingController.getAllJumpling);
+
 /**
  * function(middleware) for checking JSON type.
  * @param {*} req
@@ -19,31 +34,17 @@ const requireJsonContent = (req, res, next) => {
   }
 };
 
-router.post("/", requireJsonContent, (req, res) => {
-  const persondata = req.body;
-  const person = {};
-  person.name = req.body.name;
-  person.id = req.body.id;
-  data.push(person);
-  res.status(201).send([req.body]);
-});
+router.post("/", requireJsonContent, JumplingController.insertJumpling);
 
 /**
  * parameter processing
  */
-router.param("id", (req, res, next, jumplingId) => {
-  const resultArr = data.filter(
-    jumpling => jumpling.id === parseInt(req.params.id)
-  );
-
-  req.resultArr = resultArr;
+router.param("id", (req, res, next, id) => {
+  req.jumplingId = id;
   next();
 });
 
-router.get("/:id", (req, res) => {
-  const arrOfJumpling = req.resultArr;
-  res.status(200).send(arrOfJumpling);
-});
+router.get("/:id", JumplingController.getJumplingById);
 
 router.put("/:id", (req, res) => {
   const idToFind = person => person.id === parseInt(req.params.id);
