@@ -35,7 +35,8 @@ exports.getJumplingById = (req, res) => {
 };
 
 exports.updateJumpling = (req, res) => {
-  const idToFind = person => person.id === parseInt(req.params.id);
+  const jumplingId = req.jumplingId;
+  const idToFind = person => person.id === parseInt(jumplingId);
   const indexOfObjectToChange = data.findIndex(idToFind);
   data[indexOfObjectToChange].name = req.body.name;
   const resultObject = { id: parseInt(req.params.id), name: req.body.name };

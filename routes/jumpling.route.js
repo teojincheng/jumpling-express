@@ -46,13 +46,7 @@ router.param("id", (req, res, next, id) => {
 
 router.get("/:id", JumplingController.getJumplingById);
 
-router.put("/:id", (req, res) => {
-  const idToFind = person => person.id === parseInt(req.params.id);
-  const indexOfObjectToChange = data.findIndex(idToFind);
-  data[indexOfObjectToChange].name = req.body.name;
-  const resultObject = { id: parseInt(req.params.id), name: req.body.name };
-  res.status(200).send([resultObject]);
-});
+router.put("/:id", JumplingController.updateJumpling);
 
 router.delete("/:id", (req, res) => {
   const idToFind = person => person.id === parseInt(req.params.id);
