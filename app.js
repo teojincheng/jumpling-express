@@ -18,11 +18,19 @@ const listOfEndPoints = {
   "8": "GET    /jumplings/presenters"
 };
 
-app.get("/", (req, res) => {
+app.get("/", (req, res, next) => {
   res.send(listOfEndPoints);
 });
 
 app.use("/jumplings/presenters", presenterRouter);
 app.use("/jumplings", jumplingRouter);
+
+app.use((err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  res.status(err.statusCode);
+  res.send(`Error : ${err}<br>
+  Status code : ${err.statusCode} <br>
+    Error stack: ${err.stack}`);
+});
 
 module.exports = app;
